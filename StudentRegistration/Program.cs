@@ -5,10 +5,13 @@ using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Graph.Models.ExternalConnectors;
 using Microsoft.Identity.Web;
 using Microsoft.Identity.Web.UI;
+using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using StudentRegistration.Data;
 using StudentRegistration.Repositories;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,11 +21,24 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 
 //Register Student Service
 builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<B2CUsersService>();
 
 
 // Add services to the container.
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
-    .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"));
+    .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"))
+    .EnableTokenAcquisitionToCallDownstreamApi()
+    .AddInMemoryTokenCaches();
+
+
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("AdminOnly", policy =>
+    {
+        policy.RequireAuthenticatedUser();
+        policy.RequireRole("Admin");
+    });
+});
 
 
 builder.Services.AddControllersWithViews(options =>

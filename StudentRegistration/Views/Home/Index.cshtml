@@ -4,13 +4,13 @@
     ViewData["Title"] = "All Students";
 }
 
-<div class="container p-4">
+<div class="container-fluid px-4 mx-2">
     <div class="row">
         <div class="col-md-12">
             <h3>All Students</h3>
         </div>
     </div>
-    <div class="row">
+    <div class="row mx-auto">
         <div class="col-md-12">
             <a class="btn btn-dark" asp-controller="Home" asp-action="Add">New Student</a>
         </div>
@@ -18,7 +18,7 @@
 
     <div class="row">
         <div class="col-md-12 p-4">
-            <table class="table">
+            <table class="table table-success table-striped-columns px-2">
                 <thead>
                     <tr>
                         <th scope="col">#</th>
@@ -55,6 +55,7 @@
             </table>
         </div>
     </div>
+   
 </div>
 
 

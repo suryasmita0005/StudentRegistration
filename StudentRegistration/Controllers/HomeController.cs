@@ -89,6 +89,11 @@ namespace StudentRegistration.Controllers
             return View();
         }
 
-    
+        [HttpGet]
+        public async Task<IActionResult> AccessDenied()
+        {
+            return View();
+        }
+
     }
 }

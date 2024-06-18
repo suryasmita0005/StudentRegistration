@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Microsoft.Graph.Models.User>
+
+@{
+    ViewData["Title"] = "Edit User Details";
+}
+
+<div class="p-4 container">
+    <div class="row p-4">
+        <div class="col-md-12">
+            <h3 class="text-center fst-italic text-decoration-underline">Edit User Details</h3>
+        </div>
+    </div>
+
+    <div class="card text-bg-light border-black rounded card-4">
+        <div class="card-body">
+            <form asp-action="Edit" asp-controller="Home" method="post">
+                <div class="row g-4">
+                    <div class="col-mb-3">
+                        <label for="FirstName" class="form-label fw-bold">Name</label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="col-mb-3">
+                        <label for="LastName" class="form-label fw-bold">Email</label>
+                        <input type="text" class="form-control">
+                    </div>
+
+                    <div class="col-mb-3">
+                        <label for="LastName" class="form-label fw-bold">Role</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="col-10"></div>
+                    <div class="col-2">
+                        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -41,8 +41,7 @@ namespace StudentRegistration.Repositories
                     {
                         "displayName",
                         "id",
-                        "identities",
-                        "otherMails"
+                        "identities"
                     }.ToArray();
 
                 });

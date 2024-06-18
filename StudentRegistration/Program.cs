@@ -15,21 +15,11 @@ using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
-//Register DbContext
-var connectionString = builder.Configuration.GetConnectionString("SqlConnection");
-builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
-
-//Register Student Service
-builder.Services.AddScoped<IStudentRepository, StudentRepository>();
-builder.Services.AddScoped<B2CUsersService>();
-
-
 // Add services to the container.
 builder.Services.AddAuthentication(OpenIdConnectDefaults.AuthenticationScheme)
     .AddMicrosoftIdentityWebApp(builder.Configuration.GetSection("AzureAdB2C"))
     .EnableTokenAcquisitionToCallDownstreamApi()
     .AddInMemoryTokenCaches();
-
 
 builder.Services.AddAuthorization(options =>
 {
@@ -39,6 +29,14 @@ builder.Services.AddAuthorization(options =>
         policy.RequireRole("Admin");
     });
 });
+
+//Register DbContext
+var connectionString = builder.Configuration.GetConnectionString("SqlConnection");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+//Register Student Service
+builder.Services.AddScoped<IStudentRepository, StudentRepository>();
+builder.Services.AddScoped<B2CUsersService>();
 
 
 builder.Services.AddControllersWithViews(options =>
@@ -63,10 +61,12 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCookiePolicy();
 app.UseStaticFiles();
 
 app.UseRouting();
 
+//adding in middleware
 app.UseAuthentication();
 app.UseAuthorization();
 

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNet.Http.Features.Authentication;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -7,8 +6,7 @@ using Microsoft.Identity.Web;
 
 namespace StudentRegistration.Controllers
 {
-    [AllowAnonymous]
-    [Route("MicrosoftIdentity/[controller]/[action]")]
+    [Route("[controller]/[action]")]
     public class AccountController : Controller
     {
         [HttpGet("{scheme?}")]
@@ -30,9 +28,12 @@ namespace StudentRegistration.Controllers
             scheme ??= OpenIdConnectDefaults.AuthenticationScheme;
 
             var properties = new AuthenticationProperties
-            { RedirectUri = redirect };
-            properties.Items[Constants.Policy] = "B2C_1_AdminSignUp";
+            {
+                RedirectUri = redirect
+            };
+            properties.Items[Constants.Policy] = "B2C_1_Admin_SignUp";
             return Challenge(properties, scheme);
+
         }
     }
 }

@@ -31,7 +31,7 @@ namespace StudentRegistration.Controllers
 
             var roleClaim = claims.FirstOrDefault(c => c.Type == "extension_Role");
 
-            return roleClaim != null && roleClaim.Value == "admin";
+            return roleClaim != null && roleClaim.Value == "Admin";
         }
 
         public async Task<IActionResult> Index()
@@ -46,11 +46,12 @@ namespace StudentRegistration.Controllers
             else
             {
                 return RedirectToAction("AccessDenied", "Home");
-                //return View("EmptyView");
             }
+        }
 
-            //var users = await _graphAPIService.GetUsersAsync();
-            //return View(users);
+        public async Task<IActionResult> Edit()
+        {
+            return View();
         }
 
     }

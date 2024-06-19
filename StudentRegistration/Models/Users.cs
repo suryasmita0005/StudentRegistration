@@ -1,13 +1,15 @@
-﻿namespace StudentRegistration.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StudentRegistration.Models
 {
     public class Users
     {
-        public int UserId { get; set; }
-        public string UserName { get; set; } = string.Empty;
-        public string Email { get; set; } = string.Empty;
-        public string Role { get; set; } = string.Empty;
-        public string JobTitle { get; set; } = string.Empty;
-        public string UserType { get; set; }
+        public string? Id { get; set; } 
+        public string? Email { get; set; }
+        public string? Password { get; set; }
+        public string? DisplayName { get; set; } 
+        public string? Role { get; set; } 
+
 
 
     }

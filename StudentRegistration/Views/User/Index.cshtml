@@ -8,7 +8,7 @@
 
 <div class="row mx-auto">
     <div class="col-md-12">
-        <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="SignUpPolicy">
+        <a class="btn btn-primary" asp-area="" asp-controller="User" asp-action="Add">
             <i class="fa-solid fa-user-plus"></i> User Registration
         </a>
     </div>
@@ -19,7 +19,8 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            @* <th>Action</th> *@
+            <th>Role</th>
+            <th>Action</th>
         </tr>
     </thead>
     <tbody>
@@ -46,6 +47,7 @@
                         <p>Other Emails: @string.Join(", ", displayOtherMails)</p>
                     } *@
                 </td>
+                <td>@user.JobTitle</td>
                 <td>
                     <a asp-controller="User" asp-action="Edit" asp-route-id="@user.Id">
                         <i class="fa-solid fa-pen-to-square"></i>

@@ -1,6 +1,9 @@
 ﻿using Azure.Identity;
 using Microsoft.Graph;
 using Microsoft.Graph.Models;
+using Microsoft.Graph.Models.ExternalConnectors;
+using StudentRegistration.Models;
+using StudentRegistration.ViewModel;
 using System.Reflection;
 
 namespace StudentRegistration.Repositories
@@ -32,6 +35,7 @@ namespace StudentRegistration.Repositories
 
         }
 
+
         public async Task<IEnumerable<User>> GetUsersAsync()
         {
             var users = await _graphServiceClient.Users
@@ -41,12 +45,68 @@ namespace StudentRegistration.Repositories
                     {
                         "displayName",
                         "id",
-                        "identities"
+                        "identities",
+                        "jobTitle"
                     }.ToArray();
-
                 });
 
             return users.Value;
+        }
+
+        //public async Task<User> GetUserAsync(string id)
+        //{
+        //    if (string.IsNullOrEmpty(id))
+        //    {
+        //        throw new ArgumentNullException(nameof(id));
+        //    }
+
+        //    try
+        //    {
+        //        var user = await _graphServiceClient.Users.ById(id)
+        //            .Request()
+        //            .Select(u => new
+        //            {
+        //                u.Id,
+        //                u.DisplayName,
+        //                u.Identities,
+        //                u.JobTitle
+        //            })
+        //            .GetAsync();
+
+        //        return user;
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw;
+        //    }
+        //}
+
+
+        public async Task CreateUserAsync(UserViewModel model)
+        {
+            var user = new User
+            {
+                DisplayName = model.DisplayName,
+                Identities = new List<ObjectIdentity>
+                {
+                    new ObjectIdentity
+                    {
+                        SignInType = "emailAddress",
+                        Issuer = "asterissolutionsorg.onmicrosoft.com",
+                        IssuerAssignedId = model.Email
+                    },
+                },
+                PasswordProfile = new PasswordProfile
+                {
+                    Password = model.Password,
+                    ForceChangePasswordNextSignIn = false
+                },
+                JobTitle = model.Role
+            };
+
+            var createdUser = await _graphServiceClient.Users
+            .PostAsync(user);
+
         }
     }
 }

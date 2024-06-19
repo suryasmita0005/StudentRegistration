@@ -1,25 +1,37 @@
 ﻿@model UserViewModel
 
 @{
-    ViewData["Title"] = "Edit User Details";
+    ViewData["Title"] = "All Users";
 }
 
 <div class="p-4 container" style="width:600px;">
     <div class="row p-4">
         <div class="col-md-12">
-            <h3 class="text-center fst-italic text-decoration-underline">User Updation</h3>
+            <h3 class="text-center fst-italic text-decoration-underline">User Registration</h3>
         </div>
     </div>
 
-    <div class="card text-bg-light border-black rounded card-4">
+    <div class="card text-bg-light border-black rounded card-4" >
         <div class="card-body m-4 p-2" style="width:500px;">
-            <form asp-action="Edit" asp-controller="Home" method="post">
+            <form asp-action="Add" asp-controller="User" method="post">
                 <div class="row g-4">
-                    
+
                     <div class="col-12">
                         <label for="Email" class="form-label fw-bold">Email</label>
                         <input asp-for="Email" type="email" class="form-control" placeholder="you@example.com">
                         <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="FirstName" class="form-label fw-bold">Password</label>
+                        <input asp-for="Password" type="password" class="form-control">
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-12">
+                        <label for="FirstName" class="form-label fw-bold">Confirm Password</label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control">
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                     </div>
 
                     <div class="col-12">
@@ -41,6 +53,8 @@
                     <div class="col-8">
                         <button type="submit" class="btn btn-primary btn-lg">Submit</button>
                     </div>
+
+
                 </div>
             </form>
         </div>
